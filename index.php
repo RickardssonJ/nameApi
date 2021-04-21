@@ -1,23 +1,65 @@
 <?php
 //Steg1
-header("Content-Type: application/json; charset=UTF-8");
 
+/////////////// HEADERS /////////////////
+header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET");
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 header("Referrer-Policy: no-referrer");
 
 //steg2
-$firstNames = ["Åsa", "Jimmy", "Anders", "NIsse", "Björn", "F6", "F7", "F8", "F9", "F10"];
-$lastNames = ["Öberg", "Rickardsson", "Andersson", "Åkesson", "L5", "L6", "L7", "L8", "L9", "L10"];
+/////////////// ARRAYS /////////////////
 
-//Steg3
+$genders = ["male", "female"];
+
+$firstNameArray = [
+    "male" => ['Robert', 'Tommy', 'Adam', 'Hugo', 'Rolf', 'Oskar', 'Jimmy', 'Björn', 'Georgios', 'Özgür'],
+    "female" => ['Åsa', 'Kerstin', 'Elisabeth', 'Carina', 'Kristina', 'Johanna', 'Emelie', 'Pia', 'Lisbeth', 'Nina']
+];
+
+$lastNames = ["Öberg", "Rickardsson", "Andersson", "Åkesson", "strandbark", "Hermansson", "Thorsman", "Jigvall", "Honkanen", "widström"];
+
 $names = array();
 
+/////////////// FUNCTIONS /////////////////
+
+function replaceSpecialCharacters($string)
+{
+    return preg_replace('~&([a-z]{1,2})(acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i', '$1', htmlentities($string, ENT_QUOTES, 'UTF-8'));
+}
+
+function generateEmail($firstname, $lastname)
+{
+    $firstname = replaceSpecialCharacters($firstname);
+    $lastname = replaceSpecialCharacters($lastname);
+
+    $firstTwoLetters = substr($firstname, 0, 2);
+    $firstThreeLetters = substr($lastname, 0, 3);
+
+    $email = strtolower($firstTwoLetters) . strtolower($firstThreeLetters) . "@exempel.com";
+    return $email;
+}
+
+
+//Steg3
+/////////////// CODE TO GENERATE AND PUSH THE NEW USER /////////////////
+
+
 for ($i = 0; $i < 10; $i++) {
+
+    $gender = $genders[rand(0, 1)];
+    //Beroende på om $gender är male eller female så slumpas ett förnamn fram i från $firstNameArray med (keyn) male eller female.
+    $firstName = $firstNameArray[$gender][rand(0, 9)];
+    $lastName = $lastNames[rand(0, 9)];
+
     $name = array(
-        "firstname" => $firstNames[rand(0, 9)],
-        "lastname" => $lastNames[rand(0, 9)]
+        "Firstname" => $firstName,
+        "Lastname" => $lastName,
+        "Gender" => $gender,
+        $age = "Age" => rand(1, 100),
+        "Email" => generateEmail($firstName, $lastName)
+
     );
     array_push($names, $name);
 }
