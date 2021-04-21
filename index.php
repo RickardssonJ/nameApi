@@ -13,7 +13,7 @@ header("Referrer-Policy: no-referrer");
 
 $genders = ["male", "female"];
 
-$firstNameArray = [
+$firstNameArrays = [
     "male" => ['Robert', 'Tommy', 'Adam', 'Hugo', 'Rolf', 'Oskar', 'Jimmy', 'Björn', 'Georgios', 'Özgür'],
     "female" => ['Åsa', 'Kerstin', 'Elisabeth', 'Carina', 'Kristina', 'Johanna', 'Emelie', 'Pia', 'Lisbeth', 'Nina']
 ];
@@ -49,8 +49,8 @@ function generateEmail($firstname, $lastname)
 for ($i = 0; $i < 10; $i++) {
 
     $gender = $genders[rand(0, 1)];
-    //Beroende på om $gender är male eller female så slumpas ett förnamn fram i från $firstNameArray med (keyn) male eller female.
-    $firstName = $firstNameArray[$gender][rand(0, 9)];
+    //Beroende på om $gender är male eller female så slumpas ett förnamn fram i från $firstNameArrays med (keyn) male eller female.
+    $firstName = $firstNameArrays[$gender][rand(0, 9)];
     $lastName = $lastNames[rand(0, 9)];
 
     $name = array(
